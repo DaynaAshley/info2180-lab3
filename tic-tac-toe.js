@@ -5,6 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < boxes.length; i++) {
         boxes[i].className = "square";
         boxes[i].addEventListener("click",clickedbox);
+
+        boxes[i].addEventListener('mouseover', function(e) {
+            e.target.classList.add('hover');
+          });
+          
+        boxes[i].addEventListener('mouseout', function(e) {
+            e.target.classList.remove('hover');
+          });
     } 
 });
 
