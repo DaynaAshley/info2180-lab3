@@ -2,6 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     let boxes= document.querySelectorAll('#board > div');
+
     for (let i = 0; i < boxes.length; i++) {
         boxes[i].className = "square";
 
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
         box.addEventListener('click', () => clickedbox(box,index));
     });
+
 
     let game_arrayx=[];
     let game_arrayo=[];
@@ -71,11 +73,33 @@ function whoWon(game_array,play){
         }
     }
 
-function displaywin(name){
+    let original= document.querySelector('#status').textContent;
     let winner_name= document.querySelector('#status');
-    winner_name.innerHTML="";
+
+function displaywin(name){
+    winner_name.innerHTML='';
     winner_name.innerHTML += '\nCongratulations! '+name+' is the Winner!';
     winner_name.className=" you-won";
+}
+
+let reset= document.querySelector('.btn');
+if (reset){
+    reset.addEventListener('click', restartgame);
+}
+
+function restartgame(){
+    game_arrayx=[];
+    game_arrayo=[];
+    current_play="0";
+    game_play=true;
+
+    boxes.forEach(box => {
+        box.innerHTML="";
+    });
+
+    winner_name.classList.remove('you-won');
+    winner_name.innerHTML=original;
+
 }
 
 });
