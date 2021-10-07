@@ -29,16 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
 function clickedbox(box,index){
     if (box.innerHTML.length==0 && game_play){
         if (current_play %2 ==0){
-          
-            console.log(index);
             game_arrayx.push(index);
-            console.log(game_arrayx);
             box.innerHTML="X";
             box.className="square X"
         }
         else{
             game_arrayo.push(index);
-            console.log(game_arrayo);
             box.innerHTML="O";
             box.className="square O"
         }
