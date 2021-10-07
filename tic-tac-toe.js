@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let boxes= document.querySelectorAll('#board > div');
     for (let i = 0; i < boxes.length; i++) {
         boxes[i].className = "square";
-        boxes[i].addEventListener("click",clickedbox);
 
         boxes[i].addEventListener('mouseover', function(e) {
             e.target.classList.add('hover');
@@ -14,31 +13,73 @@ document.addEventListener('DOMContentLoaded', () => {
             e.target.classList.remove('hover');
           });
     } 
-});
 
-let game_arrayx=[];
-let game_arrayo=[];
+    boxes.forEach((box,index) =>
+    {
+        box.addEventListener('click', () => clickedbox(box,index));
+    });
 
-let current_play="1";
+    let game_arrayx=[];
+    let game_arrayo=[];
+    let current_play="0";
+    let game_play=true;
+    let winning_rows=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    
 
-
-function clickedbox(box){
-    if (box.target.innerHTML.length==0){
+function clickedbox(box,index){
+    if (box.innerHTML.length==0 && game_play){
         if (current_play %2 ==0){
-            game_arrayx.push(box.target.id);
+          
+            console.log(index);
+            game_arrayx.push(index);
             console.log(game_arrayx);
-            box.target.innerHTML="X";
-            box.target.className="square X"
+            box.innerHTML="X";
+            box.className="square X"
         }
         else{
-            game_arrayo.push(box.target.id);
+            game_arrayo.push(index);
             console.log(game_arrayo);
-            box.target.innerHTML="O";
-            box.target.className="square O"
+            box.innerHTML="O";
+            box.className="square O"
         }
     }
     else{
         return;
     }
+    
     current_play++;
+    whoWon(game_arrayx,"X");
+    whoWon(game_arrayo,"O");
+    
+    if (current_play==9){
+        let winner_name= document.querySelector('#status');
+        winner_name.innerHTML="";
+        winner_name.innerHTML += '\nThere is a tie!';
+        winner_name.className=" you-won";
+    }
 }
+
+function whoWon(game_array,play){
+        for (let i=0;i<winning_rows.length;i++){
+            let n=0;
+
+            for (let m=0;m < winning_rows[i].length; m++){
+                if (game_array.indexOf(winning_rows[i][m]) != -1){
+                    n++;
+                }
+                if (n == 3){
+                    game_play=false;
+                    displaywin(play);
+                }
+            }
+        }
+    }
+
+function displaywin(name){
+    let winner_name= document.querySelector('#status');
+    winner_name.innerHTML="";
+    winner_name.innerHTML += '\nCongratulations! '+name+' is the Winner!';
+    winner_name.className=" you-won";
+}
+
+});
