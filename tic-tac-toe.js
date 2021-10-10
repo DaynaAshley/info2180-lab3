@@ -49,7 +49,7 @@ function clickedbox(box,index){
     whoWon(game_arrayx,"X");
     whoWon(game_arrayo,"O");
     
-    if (current_play==9){
+    if (current_play==9 && game_play==true){
         let winner_name= document.querySelector('#status');
         winner_name.innerHTML="";
         winner_name.innerHTML += '\nThere is a tie!';
